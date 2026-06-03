@@ -163,6 +163,7 @@ vim.pack.add({
   { src = "https://github.com/Saghen/blink.cmp" },
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+  { src = "https://github.com/sainnhe/everforest" },
 })
 
 -- ========================================================================== --
@@ -280,7 +281,24 @@ if has_mason then
   end)
 end
 
--- 5. Transparency Setup
+-- 5. Theme Setup
+
+local use_theme = 'everforest'
+
+-- Theme Options:
+vim.g.everforest_background = 'medium'
+vim.g.everforest_enable_italics = true
+
+vim.api.nvim_create_autocmd("OptionSet", {
+  pattern = "background",
+  desc = "Automatically reload theme when the terminial theme switches",
+  callback = function()
+    vim.cmd.colorscheme(use_theme)
+  end,
+})
+vim.cmd.colorscheme(use_theme)
+
+-- 6. Transparency Setup
 local has_transparent, transparent = pcall(require, "transparent")
 if has_transparent then
   transparent.setup({
