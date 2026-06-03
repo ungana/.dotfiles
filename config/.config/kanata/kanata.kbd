@@ -1,0 +1,23 @@
+(defcfg
+  ;; Allows Kanata to pass through all keys you didn't explicitly mention in defsrc
+  process-unmapped-keys yes
+)
+
+(defsrc
+  caps  h    j    k    l    m    ,    n    .
+)
+
+(defalias
+  ;; Caps Lock: Tapped quickly = Escape | Held down = Activates navigation layer
+  ;; 233ms matches your original Karabiner timeout preference
+  cap (tap-hold 233 233 esc (layer-toggle caps_layer))
+)
+
+(deflayer default
+  @cap  _    _    _    _    _    _    _    _
+)
+
+(deflayer caps_layer
+  _     left down up   right pgdn pgup home end
+)
+

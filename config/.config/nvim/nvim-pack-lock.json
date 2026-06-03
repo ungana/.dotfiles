@@ -12,6 +12,10 @@
       "rev": "18aeab3d63d350dcf44d64c462cc489a3412af40",
       "src": "https://github.com/stevearc/conform.nvim"
     },
+    "everforest": {
+      "rev": "aeef62ee97872d2557d25904d160ec93a4a355f8",
+      "src": "https://github.com/sainnhe/everforest"
+    },
     "llm.nvim": {
       "rev": "fdc0758187da61612f9d3365f7a1ac45de47471c",
       "src": "https://github.com/huggingface/llm.nvim"
