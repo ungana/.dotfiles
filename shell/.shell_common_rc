@@ -26,11 +26,6 @@ fi
 # Golang
 export PATH="$HOME/go/bin:$PATH"
 
-# Ollama Settings
-export OLLAMA_KV_CACHE_TYPE="q8_0"
-export OLLAMA_CONTEXT_LENGTH="32768"
-export OLLAMA_KEEP_ALIVE="2h"
-
 # Universal History Size (Shared variable name)
 export HISTSIZE=1000000
 
