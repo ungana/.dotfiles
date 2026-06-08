@@ -4,6 +4,8 @@ Make sure you have homebrew installed and install Hugging Face CLI and Llama.cpp
 
 `bash
 brew install hf
+`
+`bash
 brew install llama.cpp
 `
 
@@ -13,6 +15,8 @@ Create a place to store your models and navigate there in your terminal.
 
 `bash
 mkdir ~/Development/ai/models
+`
+`bash
 cd ~/Development/ai/models
 `
 
