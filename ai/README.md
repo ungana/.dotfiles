@@ -25,7 +25,7 @@ This is is how I got Gemma 4 12B running on a M1 MacBook Air with 8-Cores and 16
 Two options. Option 1 has a tiny bit better performance with a larger context window. Option 2 should be a little more accurate.
 
 #### Option 1
-`
+```
 llama-server \
   -m ~/Development/ai/models/gemma-4-12b-it-qat-q4_0.gguf \
   --model-draft ~/Development/ai/models/gemma-4-12B-it-qat-assistant-MTP-Q8_0.gguf \
@@ -42,10 +42,10 @@ llama-server \
   --reasoning on \
   --fit off \
   --port 8080
-`
+```
 
 #### Option 2
-`
+```
 llama-server \
   -m ~/Development/ai/models/gemma-4-12b-it-qat-q4_0.gguf \
   --model-draft ~/Development/ai/models/gemma-4-12B-it-qat-assistant-MTP-Q8_0.gguf \
@@ -63,4 +63,4 @@ llama-server \
   --reasoning on \
   --fit off \
   --port 8080
-`
+```
