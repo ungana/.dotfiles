@@ -1,28 +1,66 @@
 # AI Coding Setup
 
-Make sure you have homebrew installed and install Hugging Face CLI and Llama.cpp.
+## Gemma 4 12B
 
-`brew install hf`
+This is is how I got Gemma 4 12B running on a M1 MacBook Air with 8-Cores and 16GB of RAM. It'll get around 4 tokens a second doing coding tasks that are reasonably complex. That said, if you're running on similar hardware you might want to try the E4B variant for general coding tasks and use this for more complex ones. This setup does account for the article posted by Google on optimizing for lower speced machines. From what I can tell, the bottleneck is the memory bandwith. This might be the limit (currently) for a model this big on this hardware.
 
-`brew install llama.cpp`
+- [https://blog.google/innovation-and-ai/technology/developers-tools/quantization-aware-training-gemma-4/](https://blog.google/innovation-and-ai/technology/developers-tools/quantization-aware-training-gemma-4/)
 
-## Model Storage
+> **Note**: Before beginning, be sure to make sure you have homebrew installed and install Hugging Face CLI and Llama.cpp. After the Hugging Face CLI is installed, be sure to create a token and authenicate the CLi by running `hf auth login` and passing in your token created on the Hugging Face website.
 
-Create a place to store your models and navigate there in your terminal.
+- `brew install hf`
+- `brew install llama.cpp`
 
-`mkdir ~/Development/ai/models`
+### 1. Ensure your local models directory exists
+`mkdir -p ~/Development/ai/models`
 
-`cd ~/Development/ai/models`
+### 2. Download the main Gemma 4 12B QAT GGUF model
+`hf download google/gemma-4-12B-it-qat-q4_0-gguf gemma-4-12b-it-qat-q4_0.gguf --local-dir ~/Development/ai/models`
 
-## Download Gemma 4 12B
+### 3. Download the matching MTP Assistant / Speculative Head
+`hf download Janvitos/gemma-4-12B-it-qat-assistant-MTP-Q8_0-GGUF gemma-4-12B-it-qat-assistant-MTP-Q8_0.gguf --local-dir ~/Development/ai/models`
 
-This setup will work on a lower speced machine. I have a M1 MacBook Air with 16GB of RAM.
+### 4 Run the Model
 
-`hf download bartowski/gemma-4-12B-it-GGUF --include "gemma-4-12B-it-Q4_0.gguf" --local-dir .`
+Two options. Option 1 has a tiny bit better performance with a larger context window. Option 2 should be a little more accurate.
 
-## Running the Model
+#### Option 1
+`
+llama-server \
+  -m ~/Development/ai/models/gemma-4-12b-it-qat-q4_0.gguf \
+  --model-draft ~/Development/ai/models/gemma-4-12B-it-qat-assistant-MTP-Q8_0.gguf \
+  --spec-type draft-mtp \
+  --spec-draft-n-max 4 \
+  -ngl 99 \
+  -c 16384 \
+  -ctk q4_0 \
+  -ctv q4_0 \
+  --cache-ram 2048 \
+  --temp 1.0 \
+  --top-p 0.95 \
+  --top-k 64 \
+  --reasoning on \
+  --fit off \
+  --port 8080
+`
 
-To run the model, run the following command to from the model directory (above).
-
-`llama-server -m gemma-4-12B-it-Q4_0.gguf -ngl 99 -c 16384 -ctk q4_0 -ctv q4_0 --flash-attn on --port 8080`
-
+#### Option 2
+`
+llama-server \
+  -m ~/Development/ai/models/gemma-4-12b-it-qat-q4_0.gguf \
+  --model-draft ~/Development/ai/models/gemma-4-12B-it-qat-assistant-MTP-Q8_0.gguf \
+  --spec-type draft-mtp \
+  --spec-draft-n-max 4 \
+  --parallel 1 \
+  -ngl 99 \
+  -c 8192 \
+  -ctk q8_0 \
+  -ctv q8_0 \
+  --cache-ram 2048 \
+  --temp 1.0 \
+  --top-p 0.95 \
+  --top-k 64 \
+  --reasoning on \
+  --fit off \
+  --port 8080
+`
