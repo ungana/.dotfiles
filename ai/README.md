@@ -127,9 +127,12 @@ This is is how I got JetBrains Mellum2 running on a M1 MacBook Air with 8-Cores 
 llama-server \
   -m ~/Development/ai/models/Mellum2-12B-A2.5B-Instruct-Q4_K_M.gguf \
   -ngl 99 \
+  -fa on \
   -c 32768 \
-  -ctk q8_0 \
-  -ctv q8_0 \
+  -b 2048 \
+  -ub 2048 \
+  -ctk q4_0 \
+  -ctv q4_0 \
   --cache-ram 2048 \
   --temp 0.1 \
   --port 8080
