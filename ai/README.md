@@ -41,6 +41,7 @@ llama-server \
   --top-k 64 \
   --reasoning on \
   --fit off \
+  --flash-attn on \
   --port 8080
 ```
 
@@ -62,6 +63,7 @@ llama-server \
   --top-k 64 \
   --reasoning on \
   --fit off \
+  --flash-attn on \
   --port 8080
 ```
 
@@ -101,5 +103,34 @@ llama-server \
   --temp 0.1 \
   --reasoning off \
   --fit off \
+  --flash-attn on \
+  --port 8080
+```
+
+## JetBrains Mellum2
+
+This is is how I got JetBrains Mellum2 running on a M1 MacBook Air with 8-Cores and 16GB of RAM. It'll get around 13 tokens a second doing coding tasks.
+
+> **Note**: Before beginning, be sure to make sure you have homebrew installed and install Hugging Face CLI and Llama.cpp. After the Hugging Face CLI is installed, be sure to create a token and authenicate the CLi by running `hf auth login` and passing in your token created on the Hugging Face website.
+
+- `brew install hf`
+- `brew install llama.cpp`
+
+### 1. Ensure your local directory exists
+`mkdir -p ~/Development/ai/models`
+
+### 2. Download the main E4B QAT model
+`hf download JetBrains/Mellum2-12B-A2.5B-Instruct-GGUF-Q4_K_M --include "*.gguf" --local-dir ~/Development/ai/models`
+
+### 3 Run the Model
+```
+llama-server \
+  -m ~/Development/ai/models/Mellum2-12B-A2.5B-Instruct-Q4_K_M.gguf \
+  -ngl 99 \
+  -c 32768 \
+  -ctk q8_0 \
+  -ctv q8_0 \
+  --cache-ram 2048 \
+  --temp 0.1 \
   --port 8080
 ```
