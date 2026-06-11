@@ -42,6 +42,7 @@ llama-server \
   --reasoning on \
   --fit off \
   --flash-attn on \
+  --jinja \
   --port 8080
 ```
 
@@ -64,6 +65,7 @@ llama-server \
   --reasoning on \
   --fit off \
   --flash-attn on \
+  --jinja \
   --port 8080
 ```
 
@@ -104,6 +106,7 @@ llama-server \
   --reasoning off \
   --fit off \
   --flash-attn on \
+  --jinja \
   --port 8080
 ```
 
@@ -135,5 +138,6 @@ llama-server \
   -ctv q4_0 \
   --cache-ram 2048 \
   --temp 0.1 \
+  --jinja \
   --port 8080
 ```
