@@ -1,0 +1,7 @@
+{"type":"session","version":3,"id":"019efaf3-3538-73db-ac5b-97a3936b5d84","timestamp":"2026-06-24T18:45:03.416Z","cwd":"/Users/joshua/Development/go-feed"}
+{"type":"model_change","id":"41bb6852","parentId":null,"timestamp":"2026-06-24T18:45:03.502Z","provider":"lmstudio","modelId":"kosa-4b-it-v1"}
+{"type":"thinking_level_change","id":"4a870b9c","parentId":"41bb6852","timestamp":"2026-06-24T18:45:03.502Z","thinkingLevel":"off"}
+{"type":"model_change","id":"e6993487","parentId":"4a870b9c","timestamp":"2026-06-24T18:45:07.659Z","provider":"lmstudio","modelId":"mellum2-12b-a2.5b-thinking_moe"}
+{"type":"message","id":"af1cc653","parentId":"e6993487","timestamp":"2026-06-24T18:45:10.965Z","message":{"role":"user","content":[{"type":"text","text":"tell me about this projectd"}],"timestamp":1782326710959}}
+{"type":"message","id":"f83ae054","parentId":"af1cc653","timestamp":"2026-06-24T18:45:12.222Z","message":{"role":"assistant","content":[],"api":"openai-completions","provider":"lmstudio","model":"mellum2-12b-a2.5b-thinking_moe","usage":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"totalTokens":0,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"stopReason":"aborted","timestamp":1782326711024,"errorMessage":"Operation aborted"}}
+{"type":"model_change","id":"70dc94b3","parentId":"f83ae054","timestamp":"2026-06-24T18:45:14.993Z","provider":"lmstudio","modelId":"mellum2-12b-a2.5b-thinking_moe"}

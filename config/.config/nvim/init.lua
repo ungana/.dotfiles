@@ -152,6 +152,23 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+
+vim.api.nvim_create_autocmd("PackChanged", {
+  group = vim.api.nvim_create_augroup("blink-build-hook", { clear = true }),
+  callback = function(ev)
+    -- Check if the modified plugin is blink.cmp
+    if ev.data.spec.src and ev.data.spec.src:find("blink.cmp") then
+      if ev.data.kind == "install" or ev.data.kind == "update" then
+        vim.notify("Building blink.cmp native library...", vim.log.levels.INFO)
+        pcall(function()
+          require("blink.cmp").build():pwait()
+        end)
+        vim.notify("blink.cmp build complete!", vim.log.levels.INFO)
+      end
+    end
+  end,
+})
+
 -- ========================================================================== --
 -- ==             PLUGINS (Neovim 0.12 Native Package Management)          == --
 -- ========================================================================== --

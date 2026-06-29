@@ -1,0 +1,17 @@
+{
+  "providers": {
+    "local-llama": {
+      "baseUrl": "http://127.0.0.1:8080/v1",
+      "api": "openai-completions",
+      "apiKey": "none",
+      "models": [
+        {
+          "id": "Mellum2-12B-A2.5B-Instruct-Q4_K_M.gguf",
+          "name": "JetBrains Mellum2 Local",
+          "contextWindow": 16384,
+          "maxTokens": 1024
+        }
+      ]
+    }
+  }
+}

@@ -1,11 +1,11 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "llama-local/Mellum2-12B-A2.5B-Instruct-Q4_K_M.gguf",
-  "small_model": "llama-local/Mellum2-12B-A2.5B-Instruct-Q4_K_M.gguf",
+  "model": "llama-main/Mellum2-12B-A2.5B-Instruct-Q4_K_M.gguf",
+  "small_model": "llama-small/qwen2.5-coder-1.5b",
   
   "provider": {
-    "llama-local": {
-      "name": "Llama.cpp",
+    "llama-main": {
+      "name": "Llama Main (Mellum2)",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "http://127.0.0.1:8080/v1",
@@ -14,13 +14,28 @@
       },
       "models": {
         "Mellum2-12B-A2.5B-Instruct-Q4_K_M.gguf": {
-          "name": "Mellum2-12B-A2.5B-Instruct-Q4_K_M.gguf",
+          "name": "JetBrains Mellum2",
           "contextWindow": 32768,
-          "maxOutputTokens": 4096,
+          "maxOutputTokens": 1024,
           "tool_call": true,
           "options": {
             "strictJsonSchema": true
           }
+        }
+      }
+    },
+    "llama-small": {
+      "name": "Llama Small (Qwen 1.5B)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:8081/v1",
+        "apiKey": "none"
+      },
+      "models": {
+        "qwen2.5-coder-1.5b": {
+          "name": "Qwen 2.5 Coder 1.5B",
+          "contextWindow": 2048,
+          "maxOutputTokens": 512
         }
       }
     }
@@ -47,5 +62,15 @@
         "write": "allow"
       }
     }
-  }
+  },
+
+  "mcp": {
+    "context-mode": {
+      "type": "local",
+      "command": ["context-mode"]
+    }
+  },
+
+  "plugin": ["context-mode"]
 }
+

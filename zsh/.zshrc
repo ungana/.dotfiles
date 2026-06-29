@@ -35,3 +35,8 @@ if [ -f "$HOME/.shell_common_rc" ]; then
     source "$HOME/.shell_common_rc"
 fi
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/joshua/.lmstudio/bin"
+# End of LM Studio CLI section
+

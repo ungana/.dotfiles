@@ -1,0 +1,24 @@
+{
+  "lastChangelogVersion": "0.80.2",
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 4384,
+    "keepRecentTokens": 6000
+  },
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/target/**",
+    "**/build/**",
+    "**/dist/**",
+    "**/out/**"
+  ],
+  "ignorePatternsFromGitignore": true,
+  "editorPaddingX": 1,
+  "defaultProvider": "lmstudio",
+  "defaultModel": "mellum2-12b-a2.5b-thinking_moe",
+  "packages": [
+    "npm:pi-lmstudio"
+  ],
+  "defaultThinkingLevel": "medium",
+  "theme": "dark"
+}
