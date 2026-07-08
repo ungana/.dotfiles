@@ -152,18 +152,23 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-
 vim.api.nvim_create_autocmd("PackChanged", {
   group = vim.api.nvim_create_augroup("blink-build-hook", { clear = true }),
   callback = function(ev)
-    -- Check if the modified plugin is blink.cmp
-    if ev.data.spec.src and ev.data.spec.src:find("blink.cmp") then
+    if ev.data.spec.name == "blink.cmp" then
       if ev.data.kind == "install" or ev.data.kind == "update" then
         vim.notify("Building blink.cmp native library...", vim.log.levels.INFO)
-        pcall(function()
+
+        local success, err = pcall(function()
+          vim.cmd.packadd("blink.cmp")
           require("blink.cmp").build():pwait()
         end)
-        vim.notify("blink.cmp build complete!", vim.log.levels.INFO)
+
+        if success then
+          vim.notify("blink.cmp build complete!", vim.log.levels.INFO)
+        else
+          vim.notify("blink.cmp build failed: " .. tostring(err), vim.log.levels.ERROR)
+        end
       end
     end
   end,
@@ -215,19 +220,9 @@ if has_blink then
   -- ======================================================================== --
   -- ==                      CUSTOM AUTOCOMPLETE COLORS                    == --
   -- ======================================================================== --
-  -- 1. Mute the harsh white borders by linking them to your theme's Comment color
   vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { link = "Comment" })
   vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { link = "Comment" })
-
-  -- 2. Make the typed letters that match suggestions pop using your accent color
   vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { link = "Special", bold = true })
-
-  -- 3. FIX: Match the menu backgrounds directly to your main editor window
-  -- vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = "none" })
-  -- vim.api.nvim_set_hl(0, "BlinkCmpDoc", { bg = "none" })
-
-  -- 4. Make the documentation separator line transparent with white dashes
-  -- vim.api.nvim_set_hl(0, "BlinkCmpDocSeparator", { bg = "none", fg = "#ffffff" })
 end
 
 -- 2. Formatting Engine (Conform.nvim)
@@ -266,8 +261,6 @@ end
 local has_mason, mason = pcall(require, "mason")
 
 if has_mason then
-  -- Wrap both Mason AND the LSP configurations inside the schedule block.
-  -- This ensures Mason registers its binary paths before Neovim tries to start the servers.
   vim.schedule(function()
     mason.setup()
 
@@ -289,7 +282,7 @@ if has_mason then
     })
     vim.lsp.enable("lua_ls")
 
-    -- 2. Dynamically setup the rest
+    -- 2. Dynamically setup the the other languages
     local servers = { "gopls", "eslint", "html", "cssls", "ts_ls" }
     for _, server in ipairs(servers) do
       vim.lsp.config(server, { capabilities = capabilities })
@@ -329,6 +322,11 @@ if has_transparent then
     },
   })
 end
+
+-- REMOVE AFTER 0.13.x. Adds :PackUpdate command, allowing for easy package upgrades.
+vim.api.nvim_create_user_command('PackUpdate', function()
+  vim.pack.update()
+end, { desc = 'Update all vim.pack packages' })
 
 -- Modelines
 -- vim: ts=2 sts=2 sw=2 et
