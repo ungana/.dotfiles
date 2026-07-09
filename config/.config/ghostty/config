@@ -16,3 +16,4 @@ window-decoration = false
 background-opacity = 0.8
 background-blur = 92
 
+custom-shader = ./shaders/in-game-crt-cursor.glsl
