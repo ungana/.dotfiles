@@ -152,28 +152,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("PackChanged", {
-  group = vim.api.nvim_create_augroup("blink-build-hook", { clear = true }),
-  callback = function(ev)
-    if ev.data.spec.name == "blink.cmp" then
-      if ev.data.kind == "install" or ev.data.kind == "update" then
-        vim.notify("Building blink.cmp native library...", vim.log.levels.INFO)
-
-        local success, err = pcall(function()
-          vim.cmd.packadd("blink.cmp")
-          require("blink.cmp").build():pwait()
-        end)
-
-        if success then
-          vim.notify("blink.cmp build complete!", vim.log.levels.INFO)
-        else
-          vim.notify("blink.cmp build failed: " .. tostring(err), vim.log.levels.ERROR)
-        end
-      end
-    end
-  end,
-})
-
 -- ========================================================================== --
 -- ==             PLUGINS (Neovim 0.12 Native Package Management)          == --
 -- ========================================================================== --
@@ -195,6 +173,7 @@ vim.pack.add({
 -- 1. Blink.cmp Setup (Autocomplete)
 local has_blink, blink = pcall(require, "blink.cmp")
 if has_blink then
+  blink.build():pwait()
   blink.setup({
     keymap = { preset = "enter" },
     appearance = {
