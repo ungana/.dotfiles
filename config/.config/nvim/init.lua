@@ -218,6 +218,7 @@ if has_conform then
       go = { "lsp" },
       lua = { "lsp" },
       python = { "ruff" },
+      rust = { "rustfmt", lsp_format = "fallback" },
     },
     format_on_save = {
       timeout_ms = 500,
@@ -230,7 +231,7 @@ end
 local has_ts, ts_configs = pcall(require, "nvim-treesitter.configs")
 if has_ts then
   ts_configs.setup({
-    ensure_installed = { "html", "css", "javascript", "typescript", "tsx", "lua", "go", "python" },
+    ensure_installed = { "html", "css", "javascript", "typescript", "tsx", "lua", "go", "python", "rust" },
     -- Highlighting is now handled natively via the FileType autocmd above
     -- highlight = { enable = true },
     indent = { enable = true },
@@ -263,7 +264,7 @@ if has_mason then
     vim.lsp.enable("lua_ls")
 
     -- 2. Dynamically setup the the other languages
-    local servers = { "basedpyright", "gopls", "eslint", "html", "cssls", "ts_ls" }
+    local servers = { "basedpyright", "gopls", "eslint", "html", "cssls", "ts_ls", "rust_analyzer" }
     for _, server in ipairs(servers) do
       vim.lsp.config(server, { capabilities = capabilities })
       vim.lsp.enable(server)
