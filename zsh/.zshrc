@@ -30,6 +30,10 @@ setopt EXTENDED_HISTORY
 # Custom Zsh Keybindings
 bindkey -s "^[\\" "~/.config/personal_scripts/tmux-session.sh\n"
 
+# FZF
+export FZF_CTRL_R_OPTS="--height 95%"
+eval "$(fzf --zsh)"
+
 # Load the shared configuration
 if [ -f "$HOME/.shell_common_rc" ]; then
     source "$HOME/.shell_common_rc"
